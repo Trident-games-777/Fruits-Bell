@@ -9,6 +9,6 @@ import androidx.room.RoomDatabase
 )
 abstract class UrlDatabase : RoomDatabase() {
 
-    abstract fun getUrlDao(): UrlDao
+    abstract val fruitDao: UrlDao
 
 }

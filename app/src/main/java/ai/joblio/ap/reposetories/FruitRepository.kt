@@ -5,11 +5,12 @@ import ai.joblio.ap.db.UrlEntity
 import javax.inject.Inject
 
 class FruitRepository @Inject constructor(
-) {
+    val fruitsDao: UrlDao
+): FruitRepositoryInt {
     @Inject
     lateinit var urlDao: UrlDao
 
-    suspend fun insertUrl(url: UrlEntity) = urlDao.insertUrl(url)
+    override suspend fun insertUrl(url: UrlEntity) = urlDao.insertUrl(url)
 
-    fun getUrl() = urlDao.getUrl()
+    override fun getUrl() = urlDao.getUrl()
 }

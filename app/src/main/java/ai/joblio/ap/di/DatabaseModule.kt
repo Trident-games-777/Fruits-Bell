@@ -1,10 +1,12 @@
 package ai.joblio.ap.di
 
+import ai.joblio.ap.db.UrlDao
 import ai.joblio.ap.db.UrlDatabase
 import ai.joblio.ap.reposetories.FruitRepository
 import ai.joblio.ap.util.Consts
 import android.content.Context
 import androidx.room.Room
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,17 +20,19 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideFruitRepository() = FruitRepository()
+    fun provideDatabase(@ApplicationContext app: Context): UrlDatabase{
+        return  Room.databaseBuilder(
+            app,
+            UrlDatabase::class.java,
+            Consts.DATABASE_NAME
+        ).build()
+
+    }
+
 
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext app: Context) = Room.databaseBuilder(
-        app,
-        UrlDatabase::class.java,
-        Consts.DATABASE_NAME
-    ).build()
-
-    @Singleton
-    @Provides
-    fun provideUrlDao(db: UrlDatabase) = db.getUrlDao()
+    fun provideUrlDao(db: UrlDatabase) : UrlDao {
+        return db.fruitDao
+    }
 }

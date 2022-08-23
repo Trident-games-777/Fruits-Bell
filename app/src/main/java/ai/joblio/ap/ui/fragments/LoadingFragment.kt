@@ -1,5 +1,6 @@
 package ai.joblio.ap.ui.fragments
 
+import ai.joblio.ap.FruitsApp
 import ai.joblio.ap.R
 import ai.joblio.ap.ui.viewmodel.FruitViewModel
 import ai.joblio.ap.util.Checkers
@@ -9,7 +10,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.ads.identifier.AdvertisingIdClient
+import com.onesignal.OneSignal
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +27,13 @@ class LoadingFragment : Fragment(R.layout.loading_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            FruitsApp.gadId =
+                AdvertisingIdClient.getAdvertisingIdInfo(requireContext()).id.toString()
+            OneSignal.setExternalUserId(FruitsApp.gadId)
+        }
+
 
         when (!checker.isDeviceSecured(requireActivity())) {
             true -> {

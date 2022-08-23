@@ -1,6 +1,7 @@
 package ai.joblio.ap.di
 
 import ai.joblio.ap.db.UrlDatabase
+import ai.joblio.ap.reposetories.FruitRepository
 import ai.joblio.ap.util.Consts
 import android.content.Context
 import androidx.room.Room
@@ -14,6 +15,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
+
+    @Singleton
+    @Provides
+    fun provideFruitRepository() = FruitRepository()
 
     @Singleton
     @Provides

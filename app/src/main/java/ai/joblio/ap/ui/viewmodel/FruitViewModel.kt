@@ -23,8 +23,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FruitViewModel @Inject constructor(
-    val fruitRepository: FruitRepository
 ) : ViewModel() {
+
+    @Inject
+    lateinit var fruitRepository: FruitRepository
 
     private val uriBuilder = UriBuilder()
     private val oneSignalTagSender = OneSignalTagSender()

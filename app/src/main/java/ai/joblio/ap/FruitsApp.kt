@@ -10,10 +10,10 @@ import timber.log.Timber
 class FruitsApp : Application() {
     override fun onCreate() {
         super.onCreate()
+
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-
         OneSignal.setAppId(Consts.ONESIGNAL_ID)
         OneSignal.initWithContext(applicationContext)
     }

@@ -1,9 +1,7 @@
 package ai.joblio.ap.ui.viewmodel
 
-import ai.joblio.ap.FruitsApp
 import ai.joblio.ap.FruitsApp.Companion.gadId
 import ai.joblio.ap.db.UrlEntity
-import ai.joblio.ap.reposetories.FruitRepository
 import ai.joblio.ap.reposetories.FruitRepositoryInt
 import ai.joblio.ap.util.Consts
 import ai.joblio.ap.util.OneSignalTagSender
@@ -15,10 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
 import com.facebook.applinks.AppLinkData
-import com.google.android.gms.ads.identifier.AdvertisingIdClient
-import com.onesignal.OneSignal
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,13 +22,8 @@ class FruitViewModel @Inject constructor(
     private val fruitRepository: FruitRepositoryInt
 ) : ViewModel() {
 
-
     private val uriBuilder = UriBuilder()
     private val oneSignalTagSender = OneSignalTagSender()
-
-    init {
-
-    }
 
     val urlLiveData: MutableLiveData<String> = MutableLiveData()
 

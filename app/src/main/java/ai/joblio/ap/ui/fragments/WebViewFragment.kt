@@ -3,7 +3,6 @@ package ai.joblio.ap.ui.fragments
 import ai.joblio.ap.R
 import ai.joblio.ap.databinding.WebViewFragmentBinding
 import ai.joblio.ap.db.UrlEntity
-import ai.joblio.ap.util.Checkers
 import ai.joblio.ap.ui.viewmodel.FruitViewModel
 import android.app.Activity
 import android.content.Intent
@@ -17,11 +16,8 @@ import android.webkit.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WebViewFragment : Fragment(R.layout.web_view_fragment) {
@@ -146,11 +142,9 @@ class WebViewFragment : Fragment(R.layout.web_view_fragment) {
             if (url == BASE_URL) {
                 findNavController().navigate(R.id.gameFragment2)
             } else {
-                lifecycleScope.launch(Dispatchers.IO) {
-                    viewModel.getUrlFromDb().observe(viewLifecycleOwner) {
-                        if (it == null) {
-                            viewModel.insertUrlToDB(UrlEntity(url = url))
-                        }
+                viewModel.getUrlFromDb().observe(viewLifecycleOwner) {
+                    if (it == null) {
+                        viewModel.insertUrlToDB(UrlEntity(url = url))
                     }
                 }
             }

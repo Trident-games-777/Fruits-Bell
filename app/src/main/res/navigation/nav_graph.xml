@@ -12,8 +12,8 @@
             android:id="@+id/action_loadingFragment_to_webViewFragment"
             app:destination="@id/webViewFragment" />
         <action
-            android:id="@+id/action_loadingFragment_to_gameFragment2"
-            app:destination="@id/gameFragment2" />
+            android:id="@+id/action_loadingFragment_to_startFragment"
+            app:destination="@id/startFragment" />
     </fragment>
     <fragment
         android:id="@+id/webViewFragment"
@@ -21,10 +21,29 @@
         android:label="WebViewFragment" />
     <fragment
         android:id="@+id/gameFragment2"
-        android:name="ai.joblio.ap.ui.fragments.GameFragment"
+        android:name="ai.joblio.ap.ui.fragments.game.GameFragment"
         android:label="GameFragment" >
         <argument android:name="url"
             app:argType="string"
             android:defaultValue="url" />
+        <action
+            android:id="@+id/action_gameFragment2_to_victoryFragment"
+            app:destination="@id/victoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="ai.joblio.ap.ui.fragments.game.StartFragment"
+        android:label="StartFragment" >
+        <action
+            android:id="@+id/action_startFragment_to_gameFragment2"
+            app:destination="@id/gameFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/victoryFragment"
+        android:name="ai.joblio.ap.ui.fragments.game.VictoryFragment"
+        android:label="VictoryFragment" >
+        <action
+            android:id="@+id/action_victoryFragment_to_gameFragment2"
+            app:destination="@id/gameFragment2" />
     </fragment>
 </navigation>

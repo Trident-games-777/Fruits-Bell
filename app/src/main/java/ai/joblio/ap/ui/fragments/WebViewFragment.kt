@@ -95,11 +95,8 @@ class WebViewFragment : Fragment(R.layout.web_view_fragment) {
                 override fun handleOnBackPressed() {
                     if (webView.canGoBack()) {
                         webView.goBack()
-                    } else {
-                        isEnabled = false
                     }
                 }
-
             })
     }
 
@@ -137,13 +134,14 @@ class WebViewFragment : Fragment(R.layout.web_view_fragment) {
             super.onReceivedError(view, request, error)
         }
 
-        override fun onPageFinished(view: WebView?, url: String?) {
+        override fun onPageFinished(view: WebView?, url: String) {
             super.onPageFinished(view, url)
+            CookieManager.getInstance().flush()
             if (url == BASE_URL) {
                 findNavController().navigate(R.id.gameFragment2)
             } else {
                 viewModel.getUrlFromDb().observe(viewLifecycleOwner) {
-                    if (it == null) {
+                    if (it == null && !url.contains("fruitsbell")) {
                         viewModel.insertUrlToDB(UrlEntity(url = url))
                     }
                 }

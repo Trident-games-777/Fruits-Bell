@@ -3,16 +3,8 @@ package ai.joblio.ap.util
 import com.onesignal.OneSignal
 
 class OneSignalTagSender {
-
-    fun sendTag(deepLink: String, data: MutableMap<String, Any>?) {
-        val campaign = data?.get("campaign").toString()
-
-        if (campaign == "null" && deepLink == "null") {
-            OneSignal.sendTag("key2", "organic")
-        } else if (deepLink != "null") {
-            OneSignal.sendTag("key2", deepLink.replace("myapp://", "").substringBefore("/"))
-        } else if (campaign != "null") {
-            OneSignal.sendTag("key2", campaign.substringBefore("_"))
-        }
+    fun sendTag(tg: String) {
+        OneSignal.sendTag("key2", tg)
     }
+
 }

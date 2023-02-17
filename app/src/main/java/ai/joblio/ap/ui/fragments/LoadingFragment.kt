@@ -32,7 +32,6 @@ class LoadingFragment : Fragment(R.layout.loading_fragment) {
             OneSignal.setExternalUserId(FruitsApp.gadId)
         }
 
-
         when (checker.isDeviceSecured(requireActivity())) {
             true -> {
                 startGame()
@@ -41,7 +40,7 @@ class LoadingFragment : Fragment(R.layout.loading_fragment) {
                 viewModel.getUrlFromDb().observe(viewLifecycleOwner) { urlEntity ->
                     if (urlEntity == null) {
                         lifecycleScope.launch(Dispatchers.IO) {
-                            viewModel.fetchDeeplink(requireActivity())
+                            viewModel.fetchData(requireActivity())
                         }
                         lifecycleScope.launch(Dispatchers.Main) {
                             viewModel.urlLiveData.observe(viewLifecycleOwner) { url ->
@@ -49,14 +48,13 @@ class LoadingFragment : Fragment(R.layout.loading_fragment) {
                             }
                         }
                     } else {
-                        viewModel.getUrlFromDb().observe(viewLifecycleOwner) { urlEntity ->
-                            startWebView(urlEntity?.url ?: "smth went wrong")
+                        viewModel.getUrlFromDb().observe(viewLifecycleOwner) { uE ->
+                            startWebView(uE?.url ?: "smth went wrong")
                         }
                     }
                 }
             }
         }
-
     }
 
     private fun startWebView(url: String) {

@@ -1,9 +1,5 @@
 <resources>
     <string name="app_name">Fruits Bell</string>
-
-    <string name="facebook_app_id">3130656453839710</string>
-    <string name="facebook_client_token">a6846b0a5e9f3a9a1e67ac6a6b2cdf24</string>
-
     <string name="start_game">Press to start a game</string>
     <string name="start_btn">Start</string>
     <string name="victory">You Won!</string>
